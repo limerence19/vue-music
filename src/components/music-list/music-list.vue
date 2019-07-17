@@ -1,6 +1,6 @@
 <template>
     <div class="music-list">
-        <div class="back">
+        <div class="back" @click="back">
             <i class="icon-back"></i>
         </div>
         <h1 class="title" v-html="title"></h1>
@@ -35,11 +35,12 @@
 import Scroll from 'base/scroll/scroll';
 import SongList from 'base/song-list/song-list';
 import { mapActions } from 'vuex';
-
+import { playlistMixin } from 'common/js/mixin';
 
 const RESERVED_HEIGHT = 40;
 
 export default {
+    mixins: [ playlistMixin ],
     data() {
       return {
         scrollY: 0
@@ -89,6 +90,10 @@ export default {
         'randomPlay'
       ]),
 
+      back() {
+        this.$router.back();
+      },
+
       scroll(pos) {
         this.scrollY = pos.y;
       },
@@ -104,6 +109,12 @@ export default {
         this.randomPlay({
           list: this.songs
         })
+      },
+
+      handlePlayList(playlist) {
+        const bottom = playlist.length > 0 ? '60px' : '';
+        this.$refs.list.$el.style.bottom = bottom;
+        this.$refs.list.refresh();
       }
     },
 
