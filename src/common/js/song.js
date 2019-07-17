@@ -11,6 +11,8 @@ export default class Song {
     }
 }
 
+const VKEY = 'BD6D099152D778ABA1DACF6C326271F69E90AFF773F5457FDEA939FB6353C47C93E56C774FF69D068F400D6B53D8AC772FBB09966A0A25E0'
+
 export function createSong(musicData) {
     return new Song({
         id: musicData.songid,
@@ -20,7 +22,8 @@ export function createSong(musicData) {
         album: musicData.albumname,
         duration: musicData.interval,
         image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-        url: `http://dl.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=46`
+        // 播放源的变化, guid是实时的
+        url: `http://ws.stream.qqmusic.qq.com/C400${musicData.songmid}.m4a?vkey=${VKEY}&guid=426177710&uin=0&fromtag=66`
     })
 }
 
