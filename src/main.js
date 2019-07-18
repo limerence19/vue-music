@@ -12,7 +12,9 @@ Vue.use(VueLazyLoad, {
   loading: require('common/image/default.png')
 });
 
-Vue.config.productionTip = false
+Vue.config.devtools = true;
+window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;
+Vue.config.productionTip = false;
 
 fastclick.attach(document.body);
 
@@ -22,4 +24,5 @@ new Vue({
   router,
   store,
   render: h => h(App)
-})
+});
+

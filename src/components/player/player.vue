@@ -141,7 +141,7 @@ export default {
         ProgressCircle,
         Scroll
     },
-
+    
     computed: {
         playIcon() {
             return this.playing ? 'icon-pause' : 'icon-play'

@@ -2,6 +2,9 @@
     <div class="song-list">
         <ul>
             <li v-for="(song, index) in songs" :key="index" class="item" @click="selectItem(song, index)">
+                <div class="rank" v-show="rank">
+                  <span :class="getRankClass(index)">{{getRankText(index)}}</span>
+                </div>
                 <div class="content">
                     <h2 class="name">{{song.name}}</h2>
                     <p class="desc">{{getDesc(song)}}</p>
@@ -17,6 +20,10 @@ export default {
         songs: {
             type: Array,
             default: []
+        },
+        rank: {
+          type: Boolean,
+          default: false
         }
     },
 
@@ -27,6 +34,20 @@ export default {
 
         selectItem(item, index) {
           this.$emit('select', item, index);
+        },
+
+        getRankClass(index) {
+          if (index <= 2) {
+            return `icon icon${index}`
+          } else {
+            return 'text';
+          }
+        },
+
+        getRankText(index) {
+          if (index > 2) {
+            return index + 1;
+          }
         }
     }
 }
@@ -52,15 +73,17 @@ export default {
           display: inline-block;
           width: 25px;
           height: 24px;
-          background-size: 25px 24px;
           &.icon0 {
               background: url('./first@2x.png') no-repeat;
+              background-size: cover;
           }
           &.icon1 {
               background: url('./second@2x.png') no-repeat;
+              background-size: cover;
           }
           &.icon2 {
               background: url('./third@2x.png') no-repeat;
+              background-size: cover;
           }
         }
         .text {
