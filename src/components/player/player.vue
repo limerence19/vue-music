@@ -484,6 +484,8 @@ export default {
 
     watch: {
         currentSong(newSong, oldSong) {
+            // 只有一首歌，然后删除了
+            if (!newSong.id) return;
             // 如果歌曲没变，什么都不做。譬如切换播放模式时，虽然歌曲没变，但是 currentSong还是发生了变化，就会继续播放
             if (newSong.id === oldSong.id) {
                 return;

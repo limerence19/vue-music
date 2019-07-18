@@ -109,6 +109,9 @@ export default {
 
        deleteOne(item) {
            this.deleteSong(item);
+           if (!this.playlist.length) {
+               this.hide();
+           }
        },
 
        ...mapMutations({
