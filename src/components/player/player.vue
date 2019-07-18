@@ -96,11 +96,13 @@
                         <i :class="miniIcon" class="icon-mini" @click.stop="togglePlaying"></i>
                     </progress-circle>
                 </div>
-                <div class="control">
+                <div class="control" @click.stop="showPlayList">
                     <i class="icon-playlist"></i>
                 </div>
             </div>
         </transition>
+
+        <play-list ref="playlist"></play-list>
         
         <audio 
             @canplay="ready"
@@ -122,6 +124,7 @@ import { playMode } from 'common/js/config';
 import { shuffle } from 'common/js/util' 
 import Lyric from 'lyric-parser';
 import Scroll from 'base/scroll/scroll';
+import PlayList from 'components/playlist/playlist';
 
 export default {
     data() {
@@ -139,7 +142,8 @@ export default {
     components: {
         ProgressBar,
         ProgressCircle,
-        Scroll
+        Scroll,
+        PlayList
     },
     
     computed: {
@@ -413,6 +417,10 @@ export default {
             }
 
             this.playingLyric = txt;
+        },
+
+        showPlayList() {
+            this.$refs.playlist.show();
         },
 
         middleTouchStart(e) {

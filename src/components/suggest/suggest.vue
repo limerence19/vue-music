@@ -1,5 +1,13 @@
 <template>
-    <scroll class="suggest" :data="result" :pullup="pullup" @scrollToEnd="searchMore" ref="suggest"> 
+    <scroll 
+        class="suggest" 
+        :data="result" 
+        :pullup="pullup" 
+        :beforeScroll="beforeScroll"
+        @beforeScroll="listScroll"
+        @scrollToEnd="searchMore" 
+        ref="suggest"
+    > 
         <ul class="suggest-list">
             <li @click="selectItem(item)" class="suggest-item" v-for="(item, index) in result" :key="index">
                 <div class="icon">
@@ -11,6 +19,10 @@
             </li>
             <loading v-show="hasMore" title=""></loading>
         </ul>
+
+        <div v-show="!hasMore && !result.length" class="no-result-wrapper">
+            <no-result title="抱歉，暂无搜索结果"></no-result>
+        </div>
     </scroll>
 </template>
 
@@ -22,6 +34,7 @@ import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import Singer from 'common/js/singer'
 import { mapMutations, mapActions } from 'vuex';
+import NoResult from 'base/no-result/no-result'
 
 const TYPE_SINGER = 'singer';
 
@@ -31,13 +44,15 @@ export default {
             result: [],
             page: 1,
             pullup: true,
+            beforeScroll: true,
             hasMore: true
         }
     },
 
     components: {
         Scroll,
-        Loading
+        Loading,
+        NoResult
     },
 
     props: {
@@ -68,7 +83,6 @@ export default {
             search(this.query, this.page, this.showSinger).then((res) => {
                 if (res.data.code === ERR_OK) {
                     this.result = this.genResult(res.data.data);
-                    console.log(this.result);
                     this.checkMore(res.data.data)
                 }
             })
@@ -107,6 +121,8 @@ export default {
             } else {
                 this.insertSong(item);
             }
+
+            this.$emit('select');
         },
 
         genResult(data) {
@@ -148,6 +164,10 @@ export default {
             } else {
                 return `${item.name}-${item.singer}`
             }
+        },
+
+        listScroll() {
+            this.$emit('listScroll');
         },
 
         ...mapMutations({
