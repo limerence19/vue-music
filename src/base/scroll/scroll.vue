@@ -32,6 +32,11 @@ export default {
         beforeScroll: {
             type: Boolean,
             default: false
+        },
+
+        refreshDelay: {
+            type: Number,
+            default: 20
         }
     },
 
@@ -99,7 +104,7 @@ export default {
         data() {
             setTimeout(() => {
                 this.refresh();
-            }, 20)
+            }, this.refreshDelay)
         }
     }
 }
