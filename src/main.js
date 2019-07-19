@@ -5,6 +5,9 @@ import router from './router'
 import store from './store/index';
 import fastclick from 'fastclick';
 import VueLazyLoad from 'vue-lazyload';
+import vConsole from 'vconsole';
+
+console.log('fuck')
 
 import 'common/styles/index.less';
 
